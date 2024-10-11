@@ -1,5 +1,6 @@
 import numpy as np
 import pygame
+import math
 
 ROWS = 3
 COLUMNS = 3
@@ -68,28 +69,35 @@ draw_line()
 pygame.display.update()
 pygame.time.wait(2000)
 
-# while not game_over:
-#     if turn % 2 == 0:
-#         # Player 1
-#         row = int(input("Player 1: Enter the row number (0-2) :"))
-#         column = int(input("Player 1: Enter the column number (0-2) :"))
-#         if is_valid_mark(row, column):
-#             mark(row, column, 1)
-#             if is_this_a_winnig_move(1):
-#                 game_over = True
-#         else:
-#             turn -= 1
-#     else:
-#         # Player 2
-#         row = int(input("Player 2: Enter the row number (0-2) :"))
-#         column = int(input("Player 2: Enter the column number (0-2) :"))
-#         if is_valid_mark(row, column):
-#             mark(row, column, 2)
-#             if is_this_a_winnig_move(2):
-#                 game_over = True
-#         else:
-#             turn -= 1
-#     turn += 1
-#     print(board)
-#     if game_over == True:
-#         print("Game Over")
+
+while not game_over:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print(event.pos)
+
+            if turn % 2 == 0:
+                # Player 1
+                row = math.floor(event.pos[1]/200)
+                column = math.floor(event.pos[0]/200)
+                if is_valid_mark(row, column):
+                    mark(row, column, 1)
+                    if is_this_a_winnig_move(1):
+                        game_over = True
+                else:
+                    turn -= 1
+            else:
+                # Player 2
+                row = math.floor(event.pos[1]/200)
+                column = math.floor(event.pos[0]/200)
+                if is_valid_mark(row, column):
+                    mark(row, column, 2)
+                    if is_this_a_winnig_move(2):
+                        game_over = True
+                else:
+                    turn -= 1
+            turn += 1
+            print(board)
+            if game_over == True:
+                print("Game Over")
